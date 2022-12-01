@@ -4,7 +4,7 @@ use std::path::Path;
 
 fn main() {
     let file_path ="/Users/rrodi/Documents/src/aoc22/inputs/1";
-    let mut max = 0;
+    let mut v: Vec<i32> = Vec::new();
     let mut cur: i32 =0;
 
     // File hosts must exist in current path before this produces output
@@ -12,13 +12,10 @@ fn main() {
         // Consumes the iterator, returns an (Optional) String
         for line in lines {
             if let Ok(ip) = line {
-                if cur > max
-                {
-                    max = cur;
-                }
                
                 if ip.len() == 0
                 {
+                    v.push(cur);
                     cur = 0;
                 }
                 else
@@ -27,9 +24,19 @@ fn main() {
                 }
             }
         }
+        v.push(cur);
     }
-    println!("Max : {}.", max);
+    println!("v: {:?}", v);
 
+    v.sort();
+    println!("v.sort: {:?}", v);
+
+    let top3 = &v[v.len()-3..];
+    
+    let sum: i32 = top3.iter().sum();
+    println!("the total sum of the top3 is: {}", sum);
+
+    
 }
 
 // The output is wrapped in a Result to allow matching on errors
